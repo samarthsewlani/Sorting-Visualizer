@@ -21,6 +21,7 @@ class App extends React.Component{
     };
   }
   componentDidMount(){
+    document.title="Sorting Visualizer";
     this.resetArray();
   }
   randomNumberIn(min,max){
