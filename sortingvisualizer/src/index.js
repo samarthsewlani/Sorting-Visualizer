@@ -341,13 +341,17 @@ class App extends React.Component{
           <li className="able"><a onClick={()=>this.selectionSort()}>Selection Sort</a></li>
           <li className="able"><a onClick={()=>this.selectionSortAlternate()}>Selection Sort(Alternate)</a></li>
           <li className="able"><a onClick={()=>this.mergeSort()}>Merge Sort</a></li>
-          <span>Select speed</span>
-          <Slider
-            axis="x"
-            x={this.state.x}
-            xmin={2}
-            onChange={({ x }) => this.setState({ ...this.state, x })}
-          />
+          <li>
+            <span>Select speed</span>
+          </li>
+          <li>
+            <Slider
+              axis="x"
+              x={this.state.x}
+              xmin={2}
+              onChange={({ x }) => this.setState({ ...this.state, x })}
+            />
+          </li>
           <li id="instruction">Reset Array for another simulation</li>
         </ul>
         <div className="flexbox">
