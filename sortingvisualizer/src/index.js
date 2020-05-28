@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Slider from 'react-input-slider';
+import { Helmet } from 'react-helmet'
 import { getBubbleSortAnims } from './sortingAlgorithms/bubbleSort';
 import { getBubbleSortEffecientAnims } from './sortingAlgorithms/bubbleSortEffeceint';
 import { getInsertionSortAnims } from './sortingAlgorithms/insertionSort';
@@ -333,6 +334,9 @@ class App extends React.Component{
     const wrapperStyle = { width: 400, margin: 50 };
     return(
       <div>
+        <Helmet>
+          <title>{ "Sorting Visualizer" }</title>
+        </Helmet>
         <ul>
           <li><a>Sorting Visualiser</a></li>
           <li><a onClick={()=>this.resetArray()}>Reset Array</a></li>
