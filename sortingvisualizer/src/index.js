@@ -335,7 +335,7 @@ class App extends React.Component{
     return(
       <div>
         <Helmet>
-          <title>{ "Sorting Visualizer" }</title>
+          <title>Sorting Visualizer</title>
         </Helmet>
         <ul>
           <li><a>Sorting Visualiser</a></li>
