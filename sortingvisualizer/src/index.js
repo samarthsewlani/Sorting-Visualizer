@@ -9,6 +9,7 @@ import { getInsertionSortAnims } from './sortingAlgorithms/insertionSort';
 import { getSelectionSortAlternateAnims } from './sortingAlgorithms/selectionSortAlternate';
 import { getSelectionSortAnims } from './sortingAlgorithms/selectionSort';
 import { getMergeSortAnims } from './sortingAlgorithms/mergeSort';
+import { getQuickSortAnims } from './sortingAlgorithms/quickSort';
 
 //https://seiyria.com/bootstrap-slider/
 
@@ -254,60 +255,17 @@ class App extends React.Component{
     this.disableButtons();
     const ANIMATION_SPEED=this.state.x;
     const array=this.state.array.slice();
-    /*const [travserse,auxillary]=getMergeSortAnims(array);
-    var i=0,j=0;
-    var lines=document.getElementsByClassName("line");
-    var index=0;
-    var xStyle,yStyle,x,y;
-    console.log(travserse);
-    while(i<travserse.length && j<auxillary.length){
-      index++;
-      [x,y]=travserse[i];
-      if(y<lines.length){
-      setTimeout(()=>{
-        [x,y]=travserse[i];
-        //console.log(x,y,lines[x],lines[y],lines[x].style,lines[y].style);
-        xStyle=lines[x].style;
-        yStyle=lines[y].style;
-        [xStyle.background,yStyle.background]=['navy','navy'];
-      },i*30)}
-      i+=1;
-      index++;
-      const [idx,value]=auxillary[j];
-      const barStyle=lines[idx].style;
-      setTimeout(()=>{
-        barStyle.height=value+'px';
-      },j*30)
-      j+=1;
-      index++;
-      const [idx2,value2]=auxillary[j];
-      const newbarStyle=lines[idx2].style;
-      setTimeout(()=>{
-        newbarStyle.height=value2+'px';
-      },j*30)
-      j+=1;
-      index++;
-      
-      if(y<lines.length){
-      setTimeout(()=>{
-        [x,y]=travserse[i];
-        xStyle=lines[x].style;
-        yStyle=lines[y].style;
-        [xStyle.background,yStyle.background]=['red','red'];
-      },i*30)}
-      i+=1;
-    }*/
     const anims=getMergeSortAnims(array);
     console.log(anims);
     var lines=document.getElementsByClassName("line");
     for(let i=0;i<anims.length;i++){
-      if(i%4==0 || i%4==3){
+      if(i%4===0 || i%4===3){
         const [x,y]=anims[i];
         const xStyle=lines[x].style;
         var yStyle;
         if(y<lines.length) yStyle=lines[y].style;
         else yStyle=lines[x].style;
-        const color= i%4==0 ?'red':'red';
+        const color= i%4===0 ?'red':'red';
         setTimeout(()=>{
           [xStyle.background,yStyle.background]=[color,color];
         },i*ANIMATION_SPEED)
@@ -317,6 +275,64 @@ class App extends React.Component{
         const xStyle=lines[x].style;
         setTimeout(()=>{
           xStyle.height=value+'px';
+        },i*ANIMATION_SPEED)
+      }
+    }
+  }
+  quickSort(){
+    this.disableButtons();
+    var array=this.state.array.slice();
+    const anims=getQuickSortAnims(array);
+    console.log(anims);
+    const ANIMATION_SPEED=this.state.x;
+    const lines=document.getElementsByClassName("line");
+    var firstBarStyle,secondBarStyle; 
+    for(let i=0;i<anims.length;i++){
+      //console.log(anims[i]);
+      if(anims[i][0]==="Traverse"){
+        const [type,firstBarIndex,secondBarIndex]=anims[i];
+        
+        setTimeout(()=>{
+          [firstBarStyle,secondBarStyle]=[lines[firstBarIndex].style,lines[secondBarIndex].style];
+          [firstBarStyle.background,secondBarStyle.background]=['navy','navy'];
+          console.log(anims[i]);
+        },i*ANIMATION_SPEED)
+      }
+      else if(anims[i][0]==="Retraverse"){
+        const [type,firstBarIndex,secondBarIndex]=anims[i];
+        
+        setTimeout(()=>{
+          [firstBarStyle,secondBarStyle]=[lines[firstBarIndex].style,lines[secondBarIndex].style];
+          [firstBarStyle.background,secondBarStyle.background]=['red','red'];
+          console.log(anims[i]);
+        },i*ANIMATION_SPEED)
+      }
+      else if(anims[i][0]==="Pivot"){
+        const [type,firstBarIndex]=anims[i];
+        
+        setTimeout(()=>{
+          firstBarStyle=lines[firstBarIndex].style;
+          firstBarStyle.background="green";
+          console.log(anims[i]);
+        },i*ANIMATION_SPEED)
+      }
+      else if(anims[i][0]==="Unpivot"){
+        const [type,firstBarIndex]=anims[i];
+        
+        setTimeout(()=>{
+          firstBarStyle=lines[firstBarIndex].style;
+          firstBarStyle.background="red";
+          console.log(anims[i]);
+        },i*ANIMATION_SPEED)
+      }
+      else{
+        const [type,firstBarIndex,secondBarIndex]=anims[i];
+        
+        setTimeout(()=>{
+          [firstBarStyle,secondBarStyle]=[lines[firstBarIndex].style,lines[secondBarIndex].style];
+          [firstBarStyle.height,secondBarStyle.height]=[secondBarStyle.height,firstBarStyle.height];
+          //[firstBarStyle.background,secondBarStyle.background]=[secondBarStyle.background,firstBarStyle.background];
+          console.log(anims[i]);
         },i*ANIMATION_SPEED)
       }
     }
@@ -346,10 +362,11 @@ class App extends React.Component{
           <li className="able"><a onClick={()=>this.selectionSort()}>Selection Sort</a></li>
           <li className="able"><a onClick={()=>this.selectionSortAlternate()}>Selection Sort(Alternate)</a></li>
           <li className="able"><a onClick={()=>this.mergeSort()}>Merge Sort</a></li>
+          <li className="able"><a onClick={()=>this.quickSort()}>Quick Sort</a></li>
           <li>
-            <span>Select speed</span>
+            <span>Animation speed</span>
           </li>
-          <li>
+          <li className="able">
             <Slider
               axis="x"
               x={this.state.x}
